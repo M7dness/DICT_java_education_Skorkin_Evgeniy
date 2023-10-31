@@ -36,6 +36,15 @@ public class ChatBot {
         // Виводимо вгаданий вік
         System.out.println("Your age is " + userAge + "; that's a good time to start programming!");
 
+        // Просимо користувача ввести число для підрахунку
+        System.out.println("Now, let me prove to you that I can count to any number you want!");
+        int userNumber = scanner.nextInt();
+
+        // Підраховуємо та виводимо числа від 1 до введеного числа
+        for (int i = 1; i <= userNumber; i++) {
+            System.out.println(i + "!");
+        }
+
         // Закриваємо Scanner
         scanner.close();
     }
