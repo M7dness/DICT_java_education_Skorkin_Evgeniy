@@ -18,19 +18,30 @@ public class Hangman {
         System.out.println("HANGMAN");
         System.out.println(guessedWord);
 
+        char[] guessedLetters = new char[26]; // Масив для відстеження вже введених літер
+        int guessedLetterCount = 0;
+
         while (remainingLives > 0) {
             System.out.print("Input a letter: > ");
-            char guess = scanner.next().charAt(0);
+            String input = scanner.next();
+
+            if (input.length() != 1 || !Character.isLowerCase(input.charAt(0))) {
+                System.out.println("Please enter a lowercase English letter");
+                continue;
+            }
+
+            char guess = input.charAt(0);
+
+            if (guessedLetters[guess - 'a'] == guess) {
+                System.out.println("You've already guessed this letter");
+                continue;
+            }
 
             boolean letterFound = false;
             for (int i = 0; i < wordToGuess.length(); i++) {
                 if (wordToGuess.charAt(i) == guess) {
-                    if (guessedWord.charAt(i) != guess) {
-                        guessedWord.setCharAt(i, guess);
-                        letterFound = true;
-                    } else {
-                        System.out.println("No improvements");
-                    }
+                    guessedWord.setCharAt(i, guess);
+                    letterFound = true;
                 }
             }
 
@@ -39,10 +50,13 @@ public class Hangman {
                 System.out.println("That letter doesn't appear in the word");
             }
 
+            guessedLetters[guess - 'a'] = guess;
+            guessedLetterCount++;
+
             System.out.println(guessedWord);
 
             if (guessedWord.toString().equals(wordToGuess)) {
-                System.out.println("You guessed the word!");
+                System.out.println("You guessed the word " + wordToGuess + "!");
                 System.out.println("You survived!");
                 break;
             }
